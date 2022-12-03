@@ -1,0 +1,9 @@
+version: 1
+rules:
+  - expected: Next.js
+    pattern:
+      - nextjs
+      - next.js
+  - expected: Zenn
+    pattern:
+      - zenn

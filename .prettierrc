@@ -1,0 +1,6 @@
+overrides:
+  - files:
+    - "*.md"
+    - README
+    options:
+      parser: markdown-nocjsp
