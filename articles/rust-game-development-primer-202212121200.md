@@ -48,9 +48,10 @@ published: false
     - 同一ネットワークが用意できないなど、場合によっては「プレーヤー1人につき1アプリ」の敷居が高い
     - 一定期間の無料利用後、課金の必要あり
 
-|                                                                                                                                                                                |                                                                                                                                                                             |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![](/images/rust-game-development-primer-202212121200/digital_poker_chips_preview.webp =350x)<br /> _Digital Poker Chipsのスクリーンショット[^digital_poker_chips_screenshot]_ | ![](/images/rust-game-development-primer-202212121200/rocket_poker_chips_preview.webp =320x)<br /> _Rocket Poker Chipsのスクリーンショット[^rocket_poker_chips_screenshot]_ |
+<!-- prettier-ignore -->
+|     |     |
+| --- | --- |
+| ![](/images/rust-game-development-primer-202212121200/digital_poker_chips_preview.webp =350x) *Digital Poker Chipsのスクリーンショット[^digital_poker_chips_screenshot]* | ![](/images/rust-game-development-primer-202212121200/rocket_poker_chips_preview.webp =320x)<br /> *Rocket Poker Chipsのスクリーンショット[^rocket_poker_chips_screenshot]* |
 
 この2つのアプリは特に完成度が高いので列挙していますが、それでも互いにメリット・デメリットがあります。そして、「これらのメリットを融合したちょうどいいアプリがあればなぁ…」と考えていたのですが、エンジニアらしく「だったら自分で開発すればいいじゃん」と思い至りました。まさしくこれが「ぼくのかんがえたさいきょうのポーカーチップ管理アプリ」ですね。（まだ出来上ってないですが）
 とりあえずは社内向けに開発して、さらに活動を盛り上げられたらいいなって思っています。
@@ -70,10 +71,48 @@ published: false
 
 # 調査
 
+## Rustとは
+
+言語の選定ができたところで、ここからは利用技術を事前に調査します。そもそもRustとは一体どんな言語なのか、今回改めて調査してみました。
+
+<!-- prettier-ignore -->
+![](/images/rust-game-development-primer-202212121200/rust-logo-blk.jpg)
+*Rustのロゴ[^rust-logo]*
+
+Rustは、2015年5月15日にバージョン1.0.0がリリースされた[^rust-released-version-1.0.0]比較的新しい言語です。2022年12月12日時点では、バージョン1.65.0[^rust-released-version-1.65.0]に達しています。デベロッパーはRustオープンコミュニティーが中心ではありますが、[Firefoxブラウザ](https://www.mozilla.org/ja/firefox/)で有名なMozillaが開発支援を行っており、あのMicrosoftやGoogleも一目置く存在です[^microsoft-and-google-use-rust]。MicrosoftはWindows、GoogleはAndroidという形で、それぞれのOS開発にてRustが活躍しています。
+
+Rustデベロッパーコミュニティの[公式サイト](https://www.rust-lang.org/ja)によると、下記が売りの言語のようです。
+
+- 高いメモリー効率による高いパフォーマンス
+- 静的型付けやメモリー安全性、スレッド安全性による高い信頼性
+- エンジニアにとって優しいツール群を備えたことによる高い生産性
+
+また、Mozillaの開発者によれば、C言語やC++に代わるシステムプログラミング言語を目指していた[^mozilla_developer_interviewed_for_rust]様です。OS開発で採用される流れにも、Rustの特性にも納得できる方針ですね。
+
+[^rust-logo]: [Rust Foundation - Logo Policy and Media Guide](https://foundation.rust-lang.org/policies/logo-policy-and-media-guide/)より引用。
+[^rust-released-version-1.0.0]: [Announcing Rust 1.0 | Rust Blog](https://blog.rust-lang.org/2015/05/15/Rust-1.0.html)を参照。
+[^rust-released-version-1.65.0]: GitHubの[rust/RELEASES.md at master · rust-lang/rust](https://github.com/rust-lang/rust/blob/master/RELEASES.md#version-1650-2022-11-03)を参照。
+[^microsoft-and-google-use-rust]: [グーグルやMSが「Rust」言語でOS開発、背景に国家による諜報活動の影 | 日経クロステック（xTECH）](https://xtech.nikkei.com/atcl/nxt/column/18/00692/042700054/)を参照。
+[^mozilla_developer_interviewed_for_rust]: [Rust - Mozilla の開発したシステムプログラミング言語 - に関するインタビュー](https://www.infoq.com/jp/news/2012/08/Interview-Rust/?itm_source=infoq_en&itm_medium=link_on_en_item&itm_campaign=item_in_other_langs)を参照。
+
+## Rustでゲームを作るには？
+
+### まずは今話題のあの子に聞いてみた
+
+「あの子」とは、米国時間2022年11月30日にOpenAIから発表された[ChatGPT](https://openai.com/blog/chatgpt/)です。
+
+![](/images/rust-game-development-primer-202212121200/chatgpt_way_to_game_dev_with_rust.png)
+
+### 実際はどうなのか？
+
+ChatGPTはあくまで試験的に公開されたサービスであり、間違った内容で返答されることがあると公式から公表されています。あくまで参考程度にしつつ、自分でも調べてみます。
+
+## Amethyst
+
+## gfx-rs
+
 # 感想
 
 # まとめ
-
-# 今後のアクション
 
 # 最後のお知らせ
