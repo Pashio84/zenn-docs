@@ -6,19 +6,25 @@ topics: ["rust", "amethyst", "gfxrs", "ゲーム開発"]
 published: false
 ---
 
+<!-- textlint-disable -->
+
+:::message
 こちらは [Sun\* Advent Calendar 2022](https://adventar.org/calendars/8211) 12日目として公開した記事です。
+:::
+
+<!-- textlint-enable -->
 
 # TL;DR
 
-- ポーカーのチップ管理アプリを2Dゲームで作りたい筆者
-- パフォーマンスや信頼性、生産性に優れる言語Rustはゲーム開発にも利用できるのか？について調査
-- `Amethyst`や`gfx-rs`といったゲーム開発ライブラリーがあり、今回は`Amethyst`を使えば実現可能と判明
-- **_Rustで実装する利点として〜であることも判明_**
+- ポーカーのチップ管理アプリを2Dゲーム形式で作りたい筆者
+- Rustはゲーム開発にも利用できるのか？について調査
+- C++に替わるパフォーマンスと信頼性、高い生産性を備えていることもあり、ゲーム開発に最適かつ世代交代への期待があることを把握
+- 豊富なライブラリーの中から`Bevy`と`Fyrox`をピックアップし、特徴も比較した上で`Bevy`を使う方針に決定
 - この記事では調査結果までを記載し、今後は続編として実装結果の記事化を目指す
 
 # 参考になりそうな人
 
-- 株式会社Sun Asteriskの社内文化やエンジニア職に興味がある方
+- 株式会社Sun Asteriskの社内文化やエンジニア職の雰囲気を知りたい方
 - Rustを使った開発に興味がある方
 - これからゲーム開発をしようと思っている方
 - 定番のUnityやUnrealEngineといったゲーム開発IDEは実装経験があっても、言語+ライブラリーでのゲーム開発経験がない方
@@ -65,7 +71,7 @@ published: false
 ざっくりとした基本方針として、下記の3点があります。
 
 - "Rocket Poker Chips"のようにグラフィカルで表現豊かにしたい
-- とりあえずWebGLで動作させてクロスプラットフォーム化
+- WebGLなどで動作させて、クロスプラットフォーム対応のアプリにしたい
 - 1アプリか、複数アプリ同時接続かをユーザーが選択できる
 
 そのため、2Dゲーム開発環境が必要です。ゲーム開発というと、UnityやUnrealEngineについ手が伸びてしまうイメージが個人的にあります。おそらく、有名・手軽・業界標準という要素が大きく影響していますが、ふと「言語から選定してもいいのでは？」と気づきました。加えて、ちょうどRustに手を出してみたかったところだったので、ここぞとばかりにRustを使用言語として選定してみました。「動作が速い」「保守性が高い」と言われているので、結構ゲーム開発に向いているんじゃないかなと踏んでいます。
@@ -80,15 +86,15 @@ published: false
 ![](/images/rust-game-development-primer-202212121200/rust-logo-blk.jpg)
 *Rustのロゴ[^rust-logo]*
 
-Rustは、2015年5月15日にバージョン1.0.0がリリースされた[^rust-released-version-1.0.0]比較的新しい言語です。2022年12月12日時点では、バージョン1.65.0[^rust-released-version-1.65.0]に達しています。デベロッパーはRustオープンコミュニティーが中心ではありますが、[Firefoxブラウザ](https://www.mozilla.org/ja/firefox/)で有名なMozillaが開発支援を行っており、あのMicrosoftやGoogleも一目置く存在です[^microsoft-and-google-use-rust]。MicrosoftはWindows、GoogleはAndroidという形で、それぞれのOS開発にてRustが活躍しています。
+Rustは、2015年5月15日にバージョン1.0.0がリリースされた[^rust-released-version-1.0.0]比較的新しい言語です。2022年12月12日時点では、バージョン1.65.0[^rust-released-version-1.65.0]に達しています。開発体制はRust Foundationという非営利団体が行っています。[Firefoxブラウザ](https://www.mozilla.org/ja/firefox/)で有名なMozillaが開発支援を行っており、あのMicrosoftやGoogleも一目置く存在です[^microsoft-and-google-use-rust]。MicrosoftはWindows、GoogleはAndroidという形で、それぞれのOS開発にてRustが活躍しています。
 
-Rustデベロッパーコミュニティの[公式サイト](https://www.rust-lang.org/ja)によると、下記が売りの言語のようです。
+Rustの[公式サイト](https://www.rust-lang.org/ja)によると、下記が売りの言語のようです。
 
 - 高いメモリー効率による高いパフォーマンス
 - 静的型付けやメモリー安全性、スレッド安全性による高い信頼性
 - エンジニアにとって優しいツール群を備えたことによる高い生産性
 
-また、Mozillaの開発者によれば、C言語やC++に代わるシステムプログラミング言語を目指していた[^mozilla_developer_interviewed_for_rust]様です。OS開発で採用される流れにも、Rustの特性にも納得できる方針ですね。
+また、Mozillaの開発者によれば、C言語やC++に代わるシステムプログラミング言語を目指していた[^mozilla_developer_interviewed_for_rust]ようです。OS開発で採用される流れにも、Rustの特性にも納得できる方針ですね。そして、C++はゲーム開発においても活躍する言語のうちの1つなので、その役目がRustに替わることを期待してみるのも良さそうです。
 
 [^rust-logo]: [Rust Foundation - Logo Policy and Media Guide](https://foundation.rust-lang.org/policies/logo-policy-and-media-guide/)より引用。
 [^rust-released-version-1.0.0]: [Announcing Rust 1.0 | Rust Blog](https://blog.rust-lang.org/2015/05/15/Rust-1.0.html)を参照。
@@ -98,21 +104,54 @@ Rustデベロッパーコミュニティの[公式サイト](https://www.rust-la
 
 ## Rustでゲームを作るには？
 
-### まずは今話題のあの子に聞いてみた
+さて、Rustの特性をある程度知れたところで、今度はゲーム開発を要点に調べてみました。
 
-「あの子」とは、米国時間2022年11月30日にOpenAIから発表された[ChatGPT](https://openai.com/blog/chatgpt/)です。
+まずはゲーム開発の手助けとなるライブラリーの存在を調査しました。その過程で、[Are we game yet?](https://arewegameyet.rs/)というRustのゲーム開発周辺情報について整理しているサイトを発見しました。サンプルゲームやドキュメントが記載されていて、この時点でRustゲーム開発コミュニティーの盛り上がりを感じます。
 
-![](/images/rust-game-development-primer-202212121200/chatgpt_way_to_game_dev_with_rust.png)
+このサイトの[Ecosystemセクション](https://arewegameyet.rs/#ecosystem)を参考にしつつ、日本語記事でも盛り上がりをみせているライブラリーがないか探してみたところ、BevyとFyroxという2つのライブラリーに出会いました。2つとも機能やドキュメントが豊富でライブラリー自体の開発頻度も活発のようだったので、これらについてさらに調査を進めました。その結果を下記にまとめます。
 
-### 実際はどうなのか？
+### Bevy
 
-ChatGPTはあくまで試験的に公開されたサービスであり、間違った内容で返答されることがあると公式から公表されています。あくまで参考程度にしつつ、自分でも調べてみます。
+<!-- prettier-ignore -->
+![](/images/rust-game-development-primer-202212121200/bevy_logo_light.png =300x)
+*Bevyのロゴ [^bevy-logo]*
 
-## Amethyst
+- 公式サイト： https://bevyengine.org
+- GitHub: https://github.com/bevyengine/bevy
+- バージョン： v0.9.1（2022年12月12日時点）
+- 次元： 2D/3Dどちらも作成可能
+- プラットフォーム： Windows、Linux、macOS、WebAssembly（AndroidやiOSのネイティブ版は開発中）
+- 特徴：
+  - データ指向
+  - 処理の並行性が高く、高速
+  - Entity Component System(ECS)を採用
+  - ホットリロード対応
 
-## gfx-rs
+### Fyrox
 
-# 感想
+<!-- prettier-ignore -->
+![](/images/rust-game-development-primer-202212121200/fyrox_logo.png =100x)
+*Fyroxのロゴ [^fyrox-logo]*
+
+- 公式サイト： https://fyrox.rs
+- GitHub: https://github.com/FyroxEngine/Fyrox
+- バージョン： v0.28.0（2022年12月12日時点）
+- 次元： 2D/3Dどちらも作成可能
+- プラットフォーム： Windows、Linux、macOS、WebAssembly
+- 特徴：
+  - オブジェクト指向
+  - 安全性、信頼性があり、高速
+  - GUIエディターがある
+  - 機能が豊富（アニメーション、アセット管理、AI、物理計算…）
+
+[^bevy-logo]: GitHubリポジトリの[bevy/assets/branding/bevy_logo_light.png](https://github.com/bevyengine/bevy/blob/main/assets/branding/bevy_logo_light.png)を引用。
+[^fyrox-logo]: GitHubリポジトリの[Fyrox/pics/logo.png](https://github.com/FyroxEngine/Fyrox/blob/master/pics/logo.png)を引用。
+
+# 調査後記
+
+「Rustで開発してみたい」という気持ちで進み始めたため、調査前は「Rust言語でゲーム開発ができるのか」という疑問がありました。ただ、いざ調べてみると、「ゲーム開発に対してもRustのポテンシャルが発揮できそう」という感触が得られ、「ゲーム開発界隈も盛り上がっている」ということが分かりました。ライブラリーも豊富に存在していた中でBevyとFyroxの2択に絞り込みましたが、とりあえずは**Bevy**を使う方針で進めてみようと考えています。
+
+Bevyのようにデータ志向やECSといった特徴を持つ技術を使った開発経験がなく、そこに興味を持ったところが一番の理由です。また、FyroxはBevyに比べて機能が豊富で、レンダリング面での優位性やIDEと同等の操作といった要素がありそうです。しかし、今回のゲームについてはそこまでのグラフィック精度や開発サポート性は必要ないだろうと判断しました。
 
 # まとめ
 
