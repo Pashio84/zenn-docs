@@ -2,7 +2,7 @@
 title: "ゲームを作りたくなったからRustで作ってみる！ 入門編"
 emoji: "🦀"
 type: "tech" # tech: 技術記事 / idea: アイデア
-topics: ["rust", "amethyst", "gfxrs", "ゲーム開発"]
+topics: ["rust", "bevy", "fyrox", "ゲーム開発"]
 published: true
 published_at: 2022-12-12 12:00
 ---
