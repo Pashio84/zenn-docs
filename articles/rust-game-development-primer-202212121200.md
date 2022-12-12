@@ -3,7 +3,8 @@ title: "ゲームを作りたくなったからRustで作ってみる！ 入門�
 emoji: "🦀"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rust", "amethyst", "gfxrs", "ゲーム開発"]
-published: false
+published: true
+published_at: 2022-12-12 12:00
 ---
 
 <!-- textlint-disable -->
@@ -16,7 +17,7 @@ published: false
 
 # TL;DR
 
-- ポーカーのチップ管理アプリを2Dゲーム形式で作りたい筆者
+- ポーカーのチップ管理アプリを2Dゲーム形式で作りたい
 - Rustはゲーム開発にも利用できるのか？について調査
 - C++に代わるパフォーマンスと信頼性、高い生産性を備えていることもあり、ゲーム開発に最適かつ世代交代への期待があることを把握
 - 豊富なライブラリーの中から`Bevy`と`Fyrox`をピックアップし、特徴も比較した上で`Bevy`を使う方針に決定
@@ -33,7 +34,7 @@ published: false
 
 ## 自己紹介
 
-株式会社Sun Asteriskに所属する半田侑宜です。社内ではWebアプリエンジニアとして働いていて、某Webアプリのバックエンド開発に携わっています。なので、普段の業務ではゲーム開発には関わりがないですが、大学生・院生時代にUnityを使ったゲームを開発したり研究した経験があります。
+株式会社Sun Asteriskに所属する半田侑宜です。社内ではWebアプリエンジニアとして働いていて、某Webアプリのバックエンド開発に携わっています。なので、普段の業務ではゲーム開発には関わりがないですが、大学生・院生時代にUnityを使ってゲームを開発したり研究した経験があります。
 
 余談ですが、プライベートでもよくゲームをプレイします。特にゼルダの伝説が好きです。任天堂Switchの[ゼルダの伝説 Breath of the Wild](https://www.nintendo.co.jp/zelda/botw/index.html)は有名ですが、その次回作[Tears of the Kingdom](https://www.nintendo.co.jp/zelda/totk/index.html)が来年前半に発売予定なので楽しみです。夜しか眠れません。
 
@@ -86,7 +87,7 @@ published: false
 ![](/images/rust-game-development-primer-202212121200/rust-logo-blk.jpg)
 *Rustのロゴ[^rust-logo]*
 
-Rustは、2015年5月15日にバージョン1.0.0がリリースされた[^rust-released-version-1.0.0]比較的新しい言語です。2022年12月12日時点では、バージョン1.65.0[^rust-released-version-1.65.0]に達しています。開発体制はRust Foundationという非営利団体が行っています。[Firefoxブラウザ](https://www.mozilla.org/ja/firefox/)で有名なMozillaが開発支援を行っており、あのMicrosoftやGoogleも一目置く存在です[^microsoft-and-google-use-rust]。MicrosoftはWindows、GoogleはAndroidという形で、それぞれのOS開発にてRustが活躍しています。
+Rustは、2015年5月15日にバージョン1.0.0がリリースされた[^rust-released-version-1.0.0]比較的新しい言語です。2022年12月12日時点では、バージョン1.65.0[^rust-released-version-1.65.0]に達しています。開発はRust Foundationという非営利団体が行っています。加えて、[Firefoxブラウザ](https://www.mozilla.org/ja/firefox/)で有名なMozillaが開発支援を行っており、あのMicrosoftやGoogleも一目置く存在です[^microsoft-and-google-use-rust]。MicrosoftはWindows、GoogleはAndroidという形で、それぞれのOS開発にてRustが活躍しています。
 
 Rustの[公式サイト](https://www.rust-lang.org/ja)によると、下記が売りの言語のようです。
 
@@ -140,7 +141,7 @@ Rustの[公式サイト](https://www.rust-lang.org/ja)によると、下記が�
 - プラットフォーム： Windows、Linux、macOS、WebAssembly
 - 特徴：
   - オブジェクト指向
-  - 安全性、信頼性があり、高速
+  - 安全性と信頼性があり、高速
   - GUIエディターがある
   - 機能が豊富（アニメーション、アセット管理、AI、物理計算…）
 
