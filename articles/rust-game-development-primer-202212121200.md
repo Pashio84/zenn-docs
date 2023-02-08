@@ -5,6 +5,7 @@ type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["rust", "bevy", "fyrox", "ゲーム開発"]
 published: true
 published_at: 2022-12-12 12:00
+publication_name: "sun_asterisk"
 ---
 
 <!-- textlint-disable -->
